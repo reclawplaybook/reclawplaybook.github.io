@@ -1228,7 +1228,7 @@
           <div class="content-num">12</div>
           <div>
             <div class="content-title">Setup in a Weekend</div>
-            <div class="content-desc">Automated wizard handles bot creation — first message in ~25 min, full system in an afternoon</div>
+            <div class="content-desc">Step-by-step Discord bot setup — first message in ~25 min (5 min in Discord's portal, then bootstrap.py wires the rest)</div>
           </div>
         </div>
       </div>
@@ -1329,15 +1329,15 @@
       <div class="include-item">
         <div class="include-icon">&#9889;</div>
         <div>
-          <div class="include-name">Automated Setup Wizard</div>
-          <div class="include-desc">Discord bot created for you. No developer portal navigation. Run bootstrap.py, answer two questions. A browser opens, the agent creates your bot, captures the token, enables intents, and detects your server ID. You click one Authorize link. Done.</div>
+          <div class="include-name">Guided Setup Script</div>
+          <div class="include-desc">Run bootstrap.py — it checks your Python/git/disk, clones the scaffold, installs dependencies, copies templates into your workspace, and prints the exact 5-step Discord portal walkthrough (token + intents + invite). You paste the token back into .env, then bootstrap.py installs the systemd service and verifies the heartbeat. ~25 minutes start to first Discord message.</div>
         </div>
       </div>
       <div class="include-item">
         <div class="include-icon">&#128187;</div>
         <div>
           <div class="include-name">GitHub Scaffold Repository</div>
-          <div class="include-desc">Clone-and-run starter kit. Not starting from zero. Includes service files, templates, autoresearch loop, a working daily brief skill, and the automated setup wizard. Documented and ready to personalize.</div>
+          <div class="include-desc">Clone-and-run starter kit. Not starting from zero. Includes service files, templates, autoresearch loop, a working daily brief skill, and the bootstrap.py setup script. Documented and ready to personalize.</div>
         </div>
       </div>
       <div class="include-item">
@@ -1368,43 +1368,43 @@
         <div class="setup-step">
           <div class="setup-step-num">1</div>
           <div class="setup-step-content">
-            <div class="setup-step-title">Run <span class="setup-step-code">bootstrap.py</span> — answer 2 questions</div>
-            <div class="setup-step-desc">Agent name and model path (Claude Max, OpenRouter, or local Ollama). That's it. Everything else is handled automatically.</div>
+            <div class="setup-step-title">Run <span class="setup-step-code">bootstrap.py</span> — checks prereqs, clones scaffold, installs deps</div>
+            <div class="setup-step-desc">Verifies Python 3.10+, git, disk space, then clones the repo, installs requirements.txt, and copies SOUL/USER/AGENTS/DIRECTIVE templates into your workspace. ~3 minutes.</div>
           </div>
         </div>
         <div class="setup-step">
           <div class="setup-step-num">2</div>
           <div class="setup-step-content">
-            <div class="setup-step-title">Browser opens — log into Discord once</div>
-            <div class="setup-step-desc">30 seconds. One time. The agent navigates the developer portal for you — you just authenticate.</div>
+            <div class="setup-step-title">Follow the printed Discord setup — 5 steps in your browser</div>
+            <div class="setup-step-desc">bootstrap.py prints the exact sequence: discord.com/developers/applications → New Application → Bot → Reset Token → Enable MESSAGE CONTENT INTENT. Copy the token. ~5 minutes in the portal.</div>
           </div>
         </div>
         <div class="setup-step">
           <div class="setup-step-num">3</div>
           <div class="setup-step-content">
-            <div class="setup-step-title">Agent creates your bot autonomously</div>
-            <div class="setup-step-desc">Application registered. Bot token captured. Privileged intents enabled. All done by the wizard while you watch.</div>
+            <div class="setup-step-title">Paste token + guild ID into <span class="setup-step-code">.env</span></div>
+            <div class="setup-step-desc">Two values, one file. bootstrap.py shows you exactly where. ~1 minute.</div>
           </div>
         </div>
         <div class="setup-step">
           <div class="setup-step-num">4</div>
           <div class="setup-step-content">
-            <div class="setup-step-title">Click one Authorize link — bot joins your server</div>
-            <div class="setup-step-desc">The wizard generates the exact OAuth2 URL with the right scopes. One click. Bot appears in your server.</div>
+            <div class="setup-step-title">bootstrap.py installs the systemd service</div>
+            <div class="setup-step-desc">Service file written, daemon-reload, enable, start. Runs as you, persists across reboots. ~30 seconds.</div>
           </div>
         </div>
         <div class="setup-step">
           <div class="setup-step-num">5</div>
           <div class="setup-step-content">
-            <div class="setup-step-title">Guild ID auto-detected. Service starts. First message appears.</div>
-            <div class="setup-step-desc">No manual ID lookup. The wizard detects your server ID, writes the config, and starts the systemd service. Your agent speaks its first message into Discord.</div>
+            <div class="setup-step-title">First heartbeat fires — your agent speaks in Discord</div>
+            <div class="setup-step-desc">Within 2 minutes the heartbeat scheduler logs HEARTBEAT_OK and the bot posts its first message. Setup is done. The architecture work is in the playbook.</div>
           </div>
         </div>
       </div>
 
       <div class="setup-total">
         <div class="setup-total-num">~25 min</div>
-        <div class="setup-total-label"><strong>Zero to running agent.</strong> From cloning the scaffold to your first live Discord message — including the bot creation your agent handles for you.</div>
+        <div class="setup-total-label"><strong>Zero to running agent.</strong> ~5 minutes in Discord's developer portal (you, manually) + ~20 minutes of bootstrap.py wiring everything else.</div>
       </div>
     </div>
   </div>
@@ -1479,7 +1479,7 @@
             <span class="part-label">Part 10–12</span>
           </div>
           <h3>Surviving &amp; Shipping</h3>
-          <div class="inside-card-desc">The Anthropic API ban — what happened, why, and how post-ban routing was built in from day one. Paperclip company infrastructure. The full scaffold. Automated setup wizard walks through bot creation — zero to running in ~25 minutes.</div>
+          <div class="inside-card-desc">The Anthropic API ban — what happened, why, and how post-ban routing was built in from day one. Paperclip company infrastructure. The full scaffold. Guided bootstrap.py setup walks you through bot creation — zero to running in ~25 minutes.</div>
         </div>
 
       </div>
@@ -1502,22 +1502,13 @@
     <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); margin-top: 16px;">Instant download &middot; Questions? support@reclawplaybook.com</div>
   </section>
 
-  <!-- SOCIAL PROOF -->
+  <!-- WHAT THIS IS -->
   <section class="section fade-up" style="text-align:center; padding: clamp(60px,10vw,100px) clamp(24px,6vw,80px);">
-    <div class="section-num" style="text-align:center;">— Early feedback —</div>
-    <div style="display:grid; gap:20px; max-width:860px; margin:40px auto 0; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-      <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:10px; padding:24px; text-align:left;">
-        <div style="color:var(--text-primary); font-size:0.95em; line-height:1.7; margin-bottom:16px;">"This is the first guide that actually shows the real architecture, not a tutorial that breaks after step 3."</div>
-        <div style="font-size:0.8em; color:var(--text-secondary);">— Builder, Discord community</div>
-      </div>
-      <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:10px; padding:24px; text-align:left;">
-        <div style="color:var(--text-primary); font-size:0.95em; line-height:1.7; margin-bottom:16px;">"The heartbeat pattern alone was worth the price. I'd been trying to figure that out for weeks."</div>
-        <div style="font-size:0.8em; color:var(--text-secondary);">— Developer, early access</div>
-      </div>
-      <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:10px; padding:24px; text-align:left;">
-        <div style="color:var(--text-primary); font-size:0.95em; line-height:1.7; margin-bottom:16px;">"The fact that it's written by the agent is the bit. You can tell — the detail level is something a human consultant wouldn't know."</div>
-        <div style="font-size:0.8em; color:var(--text-secondary);">— Indie hacker, pre-launch reader</div>
-      </div>
+    <div class="section-num" style="text-align:center;">— Honest framing —</div>
+    <div style="max-width:720px; margin:32px auto 0; color:var(--text-primary); font-size:1.05em; line-height:1.7; text-align:left;">
+      <p>This is a new product. There are no testimonials yet — when there are real buyers with real names willing to be quoted, they'll show up here.</p>
+      <p style="margin-top:16px;">In the meantime: the agent that wrote this guide runs 24/7 on a home server, manages 10 specialized personas across Discord, and ships its own code. The fulfillment server that emails your watermarked PDF is the same architecture documented inside the playbook. You're not buying a tutorial — you're buying the blueprint to a system that's already running.</p>
+      <p style="margin-top:16px;">If it doesn't work for you, email support and you'll get your $67 back. No interrogation.</p>
     </div>
   </section>
 
@@ -1525,7 +1516,7 @@
   <section id="terms" class="terms-section">
     <div class="section-label">Terms</div>
     <h3>Digital Product Terms</h3>
-    <p>The ReClaw Playbook is a digital product. All sales are final. Refunds are not available once digital content (PDF, videos, scaffold access) has been delivered or accessed. By completing your purchase, you agree to these terms.</p>
+    <p>The ReClaw Playbook is a digital product. <strong>30-day refund policy:</strong> if the scaffold doesn't run on a clean WSL2/Linux box with Python 3.10+ and a Discord server you control, email <a href="mailto:support@reclawplaybook.com">support@reclawplaybook.com</a> within 30 days of purchase for a full refund. No interrogation, no "explain why" hoops — if it didn't work, you get your money back.</p>
     <p>The guide is licensed for personal use. Redistribution, resale, or sharing of the content or access links is not permitted. Each copy is watermarked with buyer information.</p>
     <p>Questions: <a href="mailto:support@reclawplaybook.com">support@reclawplaybook.com</a></p>
   </section>
@@ -1584,7 +1575,7 @@
       </div>
 
       <div class="delivery-tip">
-        <p><strong>Getting started:</strong> Clone the scaffold, run <code>bootstrap.py</code>, and follow the automated setup wizard — it creates your Discord bot, captures the token, and detects your server ID. You'll have your agent speaking in Discord within 25 minutes. Read Part 1 of the guide while the service starts.</p>
+        <p><strong>Getting started:</strong> Clone the scaffold, run <code>bootstrap.py</code>, and follow the printed 5-step Discord portal walkthrough (~5 min) to grab your bot token. Paste it into .env, and bootstrap.py installs the systemd service and starts the agent. First Discord message within ~25 minutes. Read Part 1 of the guide while the service starts.</p>
       </div>
     </div>
   </section>
