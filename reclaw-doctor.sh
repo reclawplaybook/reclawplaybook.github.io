@@ -176,7 +176,42 @@ required check_agent_syntax
 required check_agent_response
 required check_memory_commands
 required check_claude_call
+check_paperclip() {
+  if command -v npx >/dev/null 2>&1 && npx paperclipai --version >/dev/null 2>&1; then
+    local version
+    version="$(npx paperclipai --version 2>/dev/null | head -1)"
+    pass "Paperclip CLI installed ($version)"
+    return 0
+  fi
+  skip "Paperclip CLI not installed (optional — needed for team setup)"
+  return 1
+}
+
+check_paperclip_running() {
+  local url="${PAPERCLIP_API_URL:-http://127.0.0.1:3101}"
+  if curl -s --max-time 3 "$url/api" >/dev/null 2>&1; then
+    pass "Paperclip server running at $url"
+    return 0
+  fi
+  skip "Paperclip server not running (optional — start with: npx paperclipai run)"
+  return 1
+}
+
+check_team_package() {
+  if [ -d "$ROOT/templates/team" ] && [ -s "$ROOT/templates/team/.paperclip.yaml" ]; then
+    local agent_count
+    agent_count="$(find "$ROOT/templates/team/agents" -name 'AGENTS.md' 2>/dev/null | wc -l)"
+    pass "Team package exists ($agent_count agent templates)"
+    return 0
+  fi
+  skip "Team package not found (optional)"
+  return 1
+}
+
 optional check_discord
+optional check_paperclip
+optional check_paperclip_running
+optional check_team_package
 
 printf '\n%d/%d required checks passed, %d/%d optional checks passed\n' "$required_pass" "$required_total" "$optional_pass" "$optional_total"
 

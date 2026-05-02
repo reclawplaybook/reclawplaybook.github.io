@@ -170,6 +170,19 @@ main() {
 
   echo
   echo "ReClaw installed at $INSTALL_DIR"
+  echo
+
+  # ── Paperclip Team Setup ──
+  setup_team="${RECLAW_SETUP_TEAM:-$(ask "Set up an AI team with Paperclip? (specialist agents for research, finance, fitness, home, engineering) [y/n] " "y")}"
+  if [ "$setup_team" = "y" ] || [ "$setup_team" = "Y" ]; then
+    chmod +x "$INSTALL_DIR/bin/team-setup.sh"
+    USER_NAME="$USER_NAME" AGENT_NAME="$AGENT_NAME" CLAUDE_TIER="$CLAUDE_TIER" \
+      RECLAW_HOME="$INSTALL_DIR" bash "$INSTALL_DIR/bin/team-setup.sh"
+  else
+    echo "Skipped team setup. You can run it later with: reclaw team-setup"
+  fi
+
+  echo
   echo "Next: talk to it with 'reclaw test-message \"hello\"' or start it with 'reclaw start'."
   if [ "$START_AGENT" = "1" ]; then
     exec "$INSTALL_DIR/bin/reclaw" start

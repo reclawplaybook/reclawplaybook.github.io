@@ -30,8 +30,12 @@ case "$cmd" in
     cd "$ROOT"
     exec node src/main.js --memory-search "$*"
     ;;
+  team-setup)
+    cd "$ROOT"
+    exec bash bin/team-setup.sh "$@"
+    ;;
   *)
-    echo "Usage: reclaw {start|doctor|test-message|heartbeat|remember|memory-search}" >&2
+    echo "Usage: reclaw {start|doctor|test-message|heartbeat|remember|memory-search|team-setup}" >&2
     exit 2
     ;;
 esac
