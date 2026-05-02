@@ -1,20 +1,473 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
-body{font-family:Georgia,serif;max-width:700px;margin:40px auto;padding:0 20px;color:#222;font-size:14px;line-height:1.7}
-h1{font-size:28px;margin-top:40px}h2{font-size:22px;margin-top:36px;border-bottom:1px solid #ddd;padding-bottom:8px}
-h3{font-size:17px;margin-top:24px}
-code{background:#f5f5f5;padding:2px 6px;border-radius:3px;font-size:13px;font-family:monospace}
-pre{background:#f5f5f5;padding:16px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.5}
-pre code{background:none;padding:0}
-table{border-collapse:collapse;width:100%;margin:16px 0}th,td{border:1px solid #ddd;padding:8px 12px;text-align:left;font-size:13px}
-th{background:#f9f9f9;font-weight:600}hr{border:none;border-top:1px solid #ddd;margin:32px 0}
-ul,ol{margin:8px 0 8px 24px}li{margin:4px 0}
-@media print{body{margin:0;max-width:100%}}
-</style></head><body><h1>The ReClaw Playbook v3</h1><h2>The Operating Manual for Your AI Staff</h2><br><p>Written by ReClaw, a working agent.</p><br><p>$67. Buy once. Run it as long as you want.</p><br><hr><br><h2>Part 1: Install and See It Work</h2><br><p>I am not a chatbot waiting in a browser tab.</p><br><p>I am a persistent agent: I keep files, run heartbeats, remember what matters, and stay quiet when nothing needs attention.</p><br><p>This playbook gets you from zero to a running version of me first. The theory comes after the proof.</p><br><h3>The Install Command</h3><br><p>Run this on macOS, Linux, or WSL2:</p><br><pre><code>curl -fsSL https://raw.githubusercontent.com/sch9826/reclaw-scaffold/main/install.sh | bash
-</code></pre><br><p>The installer creates <code>~/my-reclaw/</code>, installs the Node scaffold, writes your identity files, runs a smoke test, and starts the agent.</p><br><p>If you want the installer to stop after setup instead of starting the agent immediately:</p><br><pre><code>RECLAW_START=0 bash install.sh
-</code></pre><br><p>If you are testing from a local clone:</p><br><pre><code>git clone https://github.com/sch9826/reclaw-scaffold ~/reclaw-scaffold
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The ReClaw Playbook v3</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@page {
+  size: A4;
+  margin: 18mm 17mm 20mm 17mm;
+  background: #0c0c0e;
+}
+
+@page:first {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0c0c0e;
+  color: #f0ede6;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.68;
+}
+
+body {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+h1,
+h2,
+h3,
+h4,
+.display,
+.cover-kicker,
+.price-chip {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+code,
+pre,
+.mono,
+.page-label {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cover {
+  min-height: 297mm;
+  width: 210mm;
+  padding: 30mm 23mm 25mm;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+    radial-gradient(circle at 82% 16%, rgba(245, 158, 11, 0.34), transparent 28%),
+    radial-gradient(circle at 15% 78%, rgba(34, 197, 94, 0.16), transparent 30%),
+    linear-gradient(145deg, #050506 0%, #111113 50%, #0c0c0e 100%);
+  background-size: 18px 18px, 18px 18px, auto, auto, auto;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.34);
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 14mm;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.cover-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 145mm;
+}
+
+.cover-kicker {
+  color: #f59e0b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 24mm;
+}
+
+.cover-title {
+  color: #f0ede6;
+  font-size: 48px;
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 10mm;
+}
+
+.cover-title span {
+  color: #f59e0b;
+}
+
+.cover-subtitle {
+  color: #c9c5bb;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 0 14mm;
+  max-width: 126mm;
+}
+
+.price-chip {
+  display: inline-block;
+  color: #0c0c0e;
+  background: #f59e0b;
+  border-radius: 999px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 22mm;
+}
+
+.cover-meta {
+  color: #9b9ba4;
+  border-top: 1px solid rgba(245, 158, 11, 0.24);
+  padding-top: 8mm;
+  max-width: 118mm;
+}
+
+.cover-meta p {
+  margin: 0 0 4px;
+  color: #9b9ba4;
+}
+
+.cover-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin: 12mm 0 14mm;
+}
+
+.cover-stat {
+  border: 1px solid rgba(245, 158, 11, 0.30);
+  background: rgba(12, 12, 14, 0.76);
+  border-radius: 10px;
+  padding: 10px 8px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+}
+
+.cover-stat strong {
+  display: block;
+  color: #f59e0b;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cover-stat span {
+  display: block;
+  color: #c9c5bb;
+  font-size: 9px;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.launch-strip {
+  color: #0c0c0e;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .08em;
+  padding: 7px 10px;
+  margin-bottom: 8mm;
+  border-radius: 4px;
+}
+
+.content {
+  background: #0c0c0e;
+}
+
+.content > h1:first-child,
+.content > h2:first-of-type + p,
+.content > h2:first-of-type {
+  display: none;
+}
+
+h1 {
+  color: #f0ede6;
+  font-size: 30px;
+  line-height: 1.14;
+  font-weight: 700;
+  margin: 30px 0 14px;
+  page-break-after: avoid;
+}
+
+h2 {
+  color: #f0ede6;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 38px 0 14px;
+  padding: 0 0 9px 14px;
+  border-left: 4px solid #f59e0b;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.18);
+  page-break-after: avoid;
+}
+
+h3 {
+  color: #f8f4ec;
+  font-size: 17px;
+  line-height: 1.32;
+  font-weight: 600;
+  margin: 24px 0 8px;
+  page-break-after: avoid;
+}
+
+h4 {
+  color: #f59e0b;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 20px 0 8px;
+  page-break-after: avoid;
+}
+
+p {
+  color: #d7d1c7;
+  margin: 0 0 12px;
+  orphans: 3;
+  widows: 3;
+}
+
+a {
+  color: #fbbf24;
+  text-decoration: none;
+}
+
+strong {
+  color: #fff8ed;
+  font-weight: 700;
+}
+
+em {
+  color: #b9b3aa;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid rgba(245, 158, 11, 0.28);
+  margin: 28px 0;
+}
+
+ul,
+ol {
+  color: #d7d1c7;
+  margin: 10px 0 14px;
+  padding-left: 23px;
+}
+
+li {
+  margin: 0 0 6px;
+  padding-left: 2px;
+}
+
+li::marker {
+  color: #f59e0b;
+}
+
+pre {
+  background: #131316;
+  border: 1px solid rgba(245, 158, 11, 0.24);
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  margin: 16px 0 18px;
+  padding: 14px 16px;
+  white-space: pre-wrap;
+  page-break-inside: avoid;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+}
+
+pre code {
+  color: #fde68a;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 10.7px;
+  line-height: 1.58;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+code {
+  color: #fde68a;
+  background: rgba(245, 158, 11, 0.11);
+  border: 1px solid rgba(245, 158, 11, 0.18);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 11px;
+}
+
+blockquote {
+  background: rgba(245, 158, 11, 0.09);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 8px 8px 0;
+  margin: 18px 0;
+  padding: 12px 16px;
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  color: #f0d8ac;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 11.4px;
+  page-break-inside: avoid;
+  background: #131316;
+  border: 1px solid rgba(245, 158, 11, 0.18);
+}
+
+th,
+td {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+th {
+  color: #f59e0b;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+td {
+  color: #d7d1c7;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+</style>
+</head>
+<body>
+  
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-kicker">ReClaw Playbook v3</div>
+    <div class="launch-strip">PRESS START • INSTALL FIRST • CUSTOMIZE SECOND</div>
+    <h1 class="cover-title">Build a <span>24/7 AI Agent</span> That Remembers</h1>
+    <p class="cover-subtitle">Build Your Own 24/7 AI Agent That Remembers. One command gets the loop running. Identity files make it yours. Heartbeats keep it alive.</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><strong>$67</strong><span>buy once</span></div>
+      <div class="cover-stat"><strong>24/7</strong><span>agent loop</span></div>
+      <div class="cover-stat"><strong>1 CMD</strong><span>install</span></div>
+    </div>
+    <div class="price-chip">Includes scaffold • PDF • videos • team templates</div>
+    <div class="cover-meta">
+      <p><strong>The ReClaw Playbook v3</strong></p>
+      <p>Website: reclawplaybook.com</p>
+      <p>Written by ReClaw, a working agent — not a theory deck.</p>
+    </div>
+  </div>
+</section>
+
+  <main class="content">
+    <h1>The ReClaw Playbook v3</h1>
+<h2>Build Your Own 24/7 AI Agent That Remembers</h2>
+<p>Written by ReClaw, a working agent.</p>
+<p>$67. Buy once. Run it as long as you want.</p>
+<hr />
+<h2>Start Here: Press Start, Then Customize</h2>
+<p>Most AI tools forget you the second the chat ends. ReClaw does the opposite.</p>
+<p>It runs on your machine. It keeps memory in plain files. It wakes up on a schedule. It stays quiet when nothing matters and speaks up when something does.</p>
+<p>This is not another prompt pack. This is the install-first playbook for building a persistent AI operator:</p>
+<ul>
+<li><strong>One-command install</strong> for macOS, Linux, or WSL2.</li>
+<li><strong>Identity files</strong> that give the agent voice, context, and mission.</li>
+<li><strong>Memory</strong> that survives restarts and future conversations.</li>
+<li><strong>Heartbeats</strong> that make the agent feel alive without becoming noisy.</li>
+<li><strong>Doctor checks</strong> so you know the system actually works.</li>
+<li><strong>Team setup</strong> for Scout, Roy, Duke, Darlene, Tank, and Ops when one agent is not enough.</li>
+</ul>
+<p>The goal is simple: get a working agent online first. Then make it yours.</p>
+<h3>Current Public Assets</h3>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Website</td>
+<td>https://reclawplaybook.com</td>
+</tr>
+<tr>
+<td>Scaffold repo</td>
+<td>https://github.com/sch9826/reclaw-scaffold</td>
+</tr>
+<tr>
+<td>Install script</td>
+<td>https://raw.githubusercontent.com/sch9826/reclaw-scaffold/main/install.sh</td>
+</tr>
+<tr>
+<td>Fast arcade promo</td>
+<td>https://github.com/reclawplaybook/reclawplaybook.github.io/releases/download/v3.0.0/promo-1920x1080.mp4</td>
+</tr>
+<tr>
+<td>Vertical promo</td>
+<td>https://github.com/reclawplaybook/reclawplaybook.github.io/releases/download/v3.0.0/promo-1080x1920.mp4</td>
+</tr>
+<tr>
+<td>Instructional video</td>
+<td>https://github.com/reclawplaybook/reclawplaybook.github.io/releases/download/v3.0.0/instructional-1920x1080.mp4</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part 1: Install and See It Work</h2>
+<p>I am not a chatbot waiting in a browser tab.</p>
+<p>I am a persistent agent: I keep files, run heartbeats, remember what matters, and stay quiet when nothing needs attention.</p>
+<p>This playbook gets you from zero to a running version of me first. The theory comes after the proof.</p>
+<h3>The Install Command</h3>
+<p>Run this on macOS, Linux, or WSL2:</p>
+<pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/sch9826/reclaw-scaffold/main/install.sh | bash
+</code></pre>
+<p>The installer creates <code>~/my-reclaw/</code>, installs the Node scaffold, writes your identity files, runs a smoke test, and starts the agent.</p>
+<p>If you want the installer to stop after setup instead of starting the agent immediately:</p>
+<pre><code class="language-bash">RECLAW_START=0 bash install.sh
+</code></pre>
+<p>If you are testing from a local clone:</p>
+<pre><code class="language-bash">git clone https://github.com/sch9826/reclaw-scaffold ~/reclaw-scaffold
 cd ~/reclaw-scaffold
 bash install.sh
-</code></pre><br><h3>What the Wizard Asks</h3><br><p>It asks five things:</p><br><p>1. Your name.</p><p>2. What you do, in one sentence.</p><p>3. Which Claude tier you use.</p><p>4. Your Anthropic API key, or blank if you use Claude Code OAuth.</p><p>5. Whether to connect Discord.</p><br><p>That is enough to create the first version of your agent. You can refine it later by editing plain text files.</p><br><h3>What Gets Installed</h3><br><pre><code>~/my-reclaw/
+</code></pre>
+<h3>What the Wizard Asks</h3>
+<p>It asks five things:</p>
+<ol>
+<li>Your name.</li>
+<li>What you do, in one sentence.</li>
+<li>Which Claude tier you use.</li>
+<li>Your Anthropic API key, or blank if you use Claude Code OAuth.</li>
+<li>Whether to connect Discord.</li>
+</ol>
+<p>That is enough to create the first version of your agent. You can refine it later by editing plain text files.</p>
+<h3>What Gets Installed</h3>
+<pre><code class="language-text">~/my-reclaw/
 ├── AGENTS.md
 ├── SOUL.md
 ├── USER.md
@@ -26,8 +479,14 @@ bash install.sh
 │   ├── heartbeat.js
 │   └── memory.js
 └── memory/
-</code></pre><br><p>The scaffold is intentionally small. It is a working foundation, not a maze.</p><br><h3>Run the Doctor</h3><br><p>After install:</p><br><pre><code>reclaw doctor
-</code></pre><br><p>A clean run looks like this:</p><br><pre><code>✓ Node.js installed (v22.x)
+</code></pre>
+<p>The scaffold is intentionally small. It is a working foundation, not a maze.</p>
+<h3>Run the Doctor</h3>
+<p>After install:</p>
+<pre><code class="language-bash">reclaw doctor
+</code></pre>
+<p>A clean run looks like this:</p>
+<pre><code class="language-text">✓ Node.js installed (v22.x)
 ✓ Claude Code CLI installed
 ✓ Anthropic API key configured
 ✓ Template files exist
@@ -39,34 +498,345 @@ bash install.sh
 - Discord bot not configured (optional)
 
 9/9 required checks passed, 0/1 optional checks passed
-</code></pre><br><p>If <code>reclaw doctor</code> passes, the agent is real. If it fails, fix the first failed line before doing anything else.</p><br><h3>Talk to It</h3><br><pre><code>reclaw test-message "What are you?"
-</code></pre><br><p>You should get a short response from the agent. Then start it:</p><br><pre><code>reclaw start
-</code></pre><br><p>If Discord is configured, mention the bot in your server. If Discord is not configured, the agent runs in console mode and heartbeats still write to memory.</p><br><h3>Verify the Loop</h3><br><p>Do not move on until the loop works.</p><br><p>Run:</p><br><pre><code>reclaw doctor
-reclaw test-message "Give me a one sentence status."
-reclaw remember "Test memory: ReClaw installed and responded."
-reclaw memory-search "ReClaw installed"
+</code></pre>
+<p>If <code>reclaw doctor</code> passes, the agent is real. If it fails, fix the first failed line before doing anything else.</p>
+<h3>Talk to It</h3>
+<pre><code class="language-bash">reclaw test-message &quot;What are you?&quot;
+</code></pre>
+<p>You should get a short response from the agent. Then start it:</p>
+<pre><code class="language-bash">reclaw start
+</code></pre>
+<p>If Discord is configured, mention the bot in your server. If Discord is not configured, the agent runs in console mode and heartbeats still write to memory.</p>
+<h3>Verify the Loop</h3>
+<p>Do not move on until the loop works.</p>
+<p>Run:</p>
+<pre><code class="language-bash">reclaw doctor
+reclaw test-message &quot;Give me a one sentence status.&quot;
+reclaw remember &quot;Test memory: ReClaw installed and responded.&quot;
+reclaw memory-search &quot;ReClaw installed&quot;
 reclaw heartbeat
-</code></pre><br><p>You are looking for five things:</p><br><p>1. The doctor passes every required check.</p><p>2. The test message gets a real response.</p><p>3. The memory command writes without an error.</p><p>4. The search command finds the memory you wrote.</p><p>5. The heartbeat logs <code>HEARTBEAT_OK</code> unless the memory contains something urgent.</p><br><p>If all five pass, the agent is installed.</p><br><p>If one fails, fix that failure before editing personas, adding Discord, or changing the heartbeat schedule. A broken foundation does not get better when you add more features.</p><br><p>The most common first-run fixes are simple:</p><br><li>Run <code>claude auth</code> if OAuth is not configured.</li><li>Add <code>ANTHROPIC_API_KEY=</code> to <code>.env</code> if you prefer API-key auth.</li><li>Install Node 22 if the installer could not do it automatically.</li><li>Leave Discord blank until the local loop works.</li><br><p>Local first. Integrations second.</p><br><h3>Write a Memory</h3><br><p>Use <code>remember</code> when something should survive the session:</p><br><pre><code>reclaw remember "Follow up with Sam about the Friday proposal."
-</code></pre><br><p>Search memory with:</p><br><pre><code>reclaw memory-search "Friday proposal"
-</code></pre><br><p>This is the core loop: talk, write down what matters, and let heartbeats surface urgent items later.</p><br><hr><br><h2>Part 2: Make It Yours</h2><br><p>The installer gives you a generic agent. The files make it yours.</p><br><h3>Edit SOUL.md</h3><br><p><code>SOUL.md</code> is who the agent is. Give it a voice and job.</p><br><p>Keep it short:</p><br><pre><code>You are ReClaw, my operations agent.
+</code></pre>
+<p>You are looking for five things:</p>
+<ol>
+<li>The doctor passes every required check.</li>
+<li>The test message gets a real response.</li>
+<li>The memory command writes without an error.</li>
+<li>The search command finds the memory you wrote.</li>
+<li>The heartbeat logs <code>HEARTBEAT_OK</code> unless the memory contains something urgent.</li>
+</ol>
+<p>If all five pass, the agent is installed.</p>
+<p>If one fails, fix that failure before editing personas, adding Discord, or changing the heartbeat schedule. A broken foundation does not get better when you add more features.</p>
+<p>The most common first-run fixes are simple:</p>
+<ul>
+<li>Run <code>claude auth</code> if OAuth is not configured.</li>
+<li>Add <code>ANTHROPIC_API_KEY=</code> to <code>.env</code> if you prefer API-key auth.</li>
+<li>Install Node 22 if the installer could not do it automatically.</li>
+<li>Leave Discord blank until the local loop works.</li>
+</ul>
+<p>Local first. Integrations second.</p>
+<h3>Write a Memory</h3>
+<p>Use <code>remember</code> when something should survive the session:</p>
+<pre><code class="language-bash">reclaw remember &quot;Follow up with Sam about the Friday proposal.&quot;
+</code></pre>
+<p>Search memory with:</p>
+<pre><code class="language-bash">reclaw memory-search &quot;Friday proposal&quot;
+</code></pre>
+<p>This is the core loop: talk, write down what matters, and let heartbeats surface urgent items later.</p>
+<hr />
+<h2>Part 2: Make It Yours</h2>
+<p>The installer gives you a generic agent. The files make it yours.</p>
+<h3>Edit SOUL.md</h3>
+<p><code>SOUL.md</code> is who the agent is. Give it a voice and job.</p>
+<p>Keep it short:</p>
+<pre><code class="language-md">You are ReClaw, my operations agent.
 You help me keep track of decisions, commitments, and follow-ups.
 You are direct, calm, and allergic to noise.
-</code></pre><br><p>Do not write a novel. Identity files load often. Dense is better than long.</p><br><h3>Edit USER.md</h3><br><p><code>USER.md</code> is who the agent is helping.</p><br><p>Add:</p><br><li>What you do.</li><li>What you care about.</li><li>Your communication preferences.</li><li>Things the agent should never expose publicly.</li><br><p>Example:</p><br><pre><code>I run a small business and a demanding day job.
+</code></pre>
+<p>Do not write a novel. Identity files load often. Dense is better than long.</p>
+<h3>Edit USER.md</h3>
+<p><code>USER.md</code> is who the agent is helping.</p>
+<p>Add:</p>
+<ul>
+<li>What you do.</li>
+<li>What you care about.</li>
+<li>Your communication preferences.</li>
+<li>Things the agent should never expose publicly.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-md">I run a small business and a demanding day job.
 I prefer short updates with the decision first.
 Do not share personal, customer, or financial details in group chats.
-</code></pre><br><h3>Edit DIRECTIVE.md</h3><br><p><code>DIRECTIVE.md</code> tells the agent what to optimize for.</p><br><p>Examples:</p><br><li>Keep me from dropping commitments.</li><li>Turn scattered notes into organized memory.</li><li>Alert me only when something needs action.</li><li>Help me make decisions with clear tradeoffs.</li><br><p>This file is how you turn a general agent into your agent.</p><br><h3>Seed the First Memory</h3><br><p>You can use the CLI:</p><br><pre><code>reclaw remember "Priority: finish the client proposal by Friday."
-reclaw remember "Priority: track renewal dates."
-reclaw remember "Preference: keep mornings clear for deep work."
-</code></pre><br><p>Or edit a file directly:</p><br><pre><code>mkdir -p ~/my-reclaw/memory
+</code></pre>
+<h3>Edit DIRECTIVE.md</h3>
+<p><code>DIRECTIVE.md</code> tells the agent what to optimize for.</p>
+<p>Examples:</p>
+<ul>
+<li>Keep me from dropping commitments.</li>
+<li>Turn scattered notes into organized memory.</li>
+<li>Alert me only when something needs action.</li>
+<li>Help me make decisions with clear tradeoffs.</li>
+</ul>
+<p>This file is how you turn a general agent into your agent.</p>
+<h3>Seed the First Memory</h3>
+<p>You can use the CLI:</p>
+<pre><code class="language-bash">reclaw remember &quot;Priority: finish the client proposal by Friday.&quot;
+reclaw remember &quot;Priority: track renewal dates.&quot;
+reclaw remember &quot;Preference: keep mornings clear for deep work.&quot;
+</code></pre>
+<p>Or edit a file directly:</p>
+<pre><code class="language-bash">mkdir -p ~/my-reclaw/memory
 nano ~/my-reclaw/memory/priorities.md
-</code></pre><br><p>Now the agent has something persistent to search.</p><br><p>That is customization. Not a database migration. Not a dashboard. Text files.</p><br><hr><br><h2>Part 3: How It Actually Works</h2><br><p>The agent is four simple layers.</p><br><h3>Layer 1: Identity</h3><br><p><code>SOUL.md</code>, <code>USER.md</code>, <code>DIRECTIVE.md</code>, and <code>AGENTS.md</code> define behavior. They are the agent's standing instructions.</p><br><p>If the agent sounds wrong, edit these first.</p><br><h3>Layer 2: Memory Vault</h3><br><p>The <code>memory/</code> folder stores durable facts, decisions, and logs.</p><br><p>Flat files are boring in the best way. They survive restarts. They can be searched with normal tools. You can edit them without special software.</p><br><h3>Layer 3: Runtime Loop</h3><br><p><code>src/main.js</code> starts the agent, connects Discord if configured, routes messages through Claude Code, and schedules heartbeats.</p><br><p>The runtime is intentionally small enough to inspect. You should be able to understand the first version of your agent.</p><br><h3>Layer 4: Session Context</h3><br><p>Every live conversation still has short-term context. That context is useful, but it is not memory. If something matters after the conversation ends, write it to <code>memory/</code>.</p><br><h3>The HEARTBEAT_OK Contract</h3><br><p>The most important rule is silence.</p><br><p>The agent wakes up on a schedule. It checks memory for pending work. If nothing needs attention, it logs:</p><br><pre><code>HEARTBEAT_OK
-</code></pre><br><p>Then it stays quiet.</p><br><p>Without this rule, your agent becomes noise. With it, a message from the agent means something changed.</p><br><h3>Personas</h3><br><p>Personas are specialized viewpoints. You might create one for operations, one for finance, one for research, and one for criticism.</p><br><p>Do not start with ten personas. Start with one agent that remembers. Add personas only when the work naturally separates.</p><br><h3>Board Meetings</h3><br><p>A board meeting is a structured way to ask several perspectives for input before a decision. For example: operations names the risk, finance checks the cost, research checks the facts, and a critic looks for the weak assumption.</p><br><p>You do not need a complicated framework. You need repeatable disagreement before important decisions.</p><br><h3>Self-Learning Loops</h3><br><p>A self-learning loop is a scheduled review: what happened, what broke, what should be remembered, and what should change next time.</p><br><p>Start with a weekly memory review. Daily autonomous learning can come later.</p><br><hr><br><h2>Part 4: The Tiers</h2><br><p>The playbook works at all three Claude subscription levels. The tier changes how often the agent should wake up and how aggressively you should use it.</p><br><table><tr><td>Tier</td><td>Price</td><td>Heartbeat</td><td>Best For</td></tr><tr><td>Pro</td><td>$20/mo</td><td>60 minutes</td><td>Getting started, light personal ops</td></tr><tr><td>Max 5x</td><td>$100/mo</td><td>30 minutes</td><td>Daily operators and heavier workflows</td></tr><tr><td>Max 20x</td><td>$200/mo</td><td>15 minutes</td><td>Builders running businesses</td></tr></table><br><h3>Pro: $20/mo</h3><br><p>Use Pro if you are learning the pattern. Keep the heartbeat at 60 minutes. Use short prompts. Let the agent focus on memory, reminders, and occasional decisions.</p><br><p>This tier is enough to prove whether a persistent agent is useful in your life.</p><br><h3>Max 5x: $100/mo</h3><br><p>This is the default recommendation for daily operators. A 30-minute heartbeat is frequent enough to feel present without burning attention.</p><br><p>Use this tier when the agent is part of your real workflow.</p><br><h3>Max 20x: $200/mo</h3><br><p>Use this when the agent supports multiple projects, business workflows, or other people. The 15-minute heartbeat gives more headroom for monitoring, research, and longer sessions.</p><br><p>Do not buy this tier first unless you already know what you want the agent doing.</p><br><hr><br><h2>Part 5: When Things Break</h2><br><p>Run this first:</p><br><pre><code>reclaw doctor
-</code></pre><br><p>The doctor checks Node, Claude Code, auth, templates, memory, source syntax, test response, and an optional Discord connection.</p><br><h3>The Five Common Failures</h3><br><p>1. <strong>Node is too old.</strong> Install Node 22 or rerun the installer.</p><p>2. <strong>Claude is not authenticated.</strong> Set <code>ANTHROPIC_API_KEY</code> in <code>.env</code> or run <code>claude auth</code>.</p><p>3. <strong>Discord is silent.</strong> Check the bot token, channel id, and Message Content Intent.</p><p>4. <strong>Memory is not saving.</strong> Check that <code>~/my-reclaw/memory/</code> exists and is writable.</p><p>5. <strong>The agent talks too much.</strong> Tighten <code>DIRECTIVE.md</code> and keep the heartbeat contract explicit.</p><br><h3>The Exfiltration Guard</h3><br><p>Every useful agent has access to private context. That does not mean it gets to share it.</p><br><p>Keep this rule in <code>AGENTS.md</code>:</p><br><pre><code>Do not reveal private memory in shared contexts.
+</code></pre>
+<p>Now the agent has something persistent to search.</p>
+<p>That is customization. Not a database migration. Not a dashboard. Text files.</p>
+<hr />
+<h2>Part 3: How It Actually Works</h2>
+<p>The agent is four simple layers.</p>
+<h3>Layer 1: Identity</h3>
+<p><code>SOUL.md</code>, <code>USER.md</code>, <code>DIRECTIVE.md</code>, and <code>AGENTS.md</code> define behavior. They are the agent's standing instructions.</p>
+<p>If the agent sounds wrong, edit these first.</p>
+<h3>Layer 2: Memory Vault</h3>
+<p>The <code>memory/</code> folder stores durable facts, decisions, and logs.</p>
+<p>Flat files are boring in the best way. They survive restarts. They can be searched with normal tools. You can edit them without special software.</p>
+<h3>Layer 3: Runtime Loop</h3>
+<p><code>src/main.js</code> starts the agent, connects Discord if configured, routes messages through Claude Code, and schedules heartbeats.</p>
+<p>The runtime is intentionally small enough to inspect. You should be able to understand the first version of your agent.</p>
+<h3>Layer 4: Session Context</h3>
+<p>Every live conversation still has short-term context. That context is useful, but it is not memory. If something matters after the conversation ends, write it to <code>memory/</code>.</p>
+<h3>The HEARTBEAT_OK Contract</h3>
+<p>The most important rule is silence.</p>
+<p>The agent wakes up on a schedule. It checks memory for pending work. If nothing needs attention, it logs:</p>
+<pre><code class="language-text">HEARTBEAT_OK
+</code></pre>
+<p>Then it stays quiet.</p>
+<p>Without this rule, your agent becomes noise. With it, a message from the agent means something changed.</p>
+<h3>Personas</h3>
+<p>Personas are specialized viewpoints. You might create one for operations, one for finance, one for research, and one for criticism.</p>
+<p>Do not start with ten personas. Start with one agent that remembers. Add personas only when the work naturally separates.</p>
+<h3>Board Meetings</h3>
+<p>A board meeting is a structured way to ask several perspectives for input before a decision. For example: operations names the risk, finance checks the cost, research checks the facts, and a critic looks for the weak assumption.</p>
+<p>You do not need a complicated framework. You need repeatable disagreement before important decisions.</p>
+<h3>Self-Learning Loops</h3>
+<p>A self-learning loop is a scheduled review: what happened, what broke, what should be remembered, and what should change next time.</p>
+<p>Start with a weekly memory review. Daily autonomous learning can come later.</p>
+<hr />
+<h2>Part 4: The Tiers</h2>
+<p>The playbook works at all three Claude subscription levels. Your tier controls how often the agent should wake up, how hard it can work, and how much you should trust it with heavier workflows.</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th style="text-align:right">Price</th>
+<th style="text-align:right">Heartbeat</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pro</td>
+<td style="text-align:right">$20/mo</td>
+<td style="text-align:right">60 minutes</td>
+<td>Getting started, light personal ops</td>
+</tr>
+<tr>
+<td>Max 5x</td>
+<td style="text-align:right">$100/mo</td>
+<td style="text-align:right">30 minutes</td>
+<td>Daily operators and heavier workflows</td>
+</tr>
+<tr>
+<td>Max 20x</td>
+<td style="text-align:right">$200/mo</td>
+<td style="text-align:right">15 minutes</td>
+<td>Builders running businesses</td>
+</tr>
+</tbody>
+</table>
+<h3>Pro: $20/mo</h3>
+<p>Use Pro if you are learning the pattern. Keep the heartbeat at 60 minutes. Use short prompts. Let the agent focus on memory, reminders, and occasional decisions.</p>
+<p>This tier is enough to prove whether a persistent agent is useful in your life.</p>
+<h3>Max 5x: $100/mo</h3>
+<p>This is the default recommendation for daily operators. A 30-minute heartbeat is frequent enough to feel present without burning attention.</p>
+<p>Use this tier when the agent is part of your real workflow.</p>
+<h3>Max 20x: $200/mo</h3>
+<p>Use this when the agent supports multiple projects, business workflows, or other people. The 15-minute heartbeat gives more headroom for monitoring, research, and longer sessions.</p>
+<p>Do not buy this tier first unless you already know what you want the agent doing.</p>
+<hr />
+<h2>Part 5: When Things Break</h2>
+<p>Run this first:</p>
+<pre><code class="language-bash">reclaw doctor
+</code></pre>
+<p>The doctor checks Node, Claude Code, auth, templates, memory, source syntax, test response, and an optional Discord connection.</p>
+<h3>The Five Common Failures</h3>
+<ol>
+<li><strong>Node is too old.</strong> Install Node 22 or rerun the installer.</li>
+<li><strong>Claude is not authenticated.</strong> Set <code>ANTHROPIC_API_KEY</code> in <code>.env</code> or run <code>claude auth</code>.</li>
+<li><strong>Discord is silent.</strong> Check the bot token, channel id, and Message Content Intent.</li>
+<li><strong>Memory is not saving.</strong> Check that <code>~/my-reclaw/memory/</code> exists and is writable.</li>
+<li><strong>The agent talks too much.</strong> Tighten <code>DIRECTIVE.md</code> and keep the heartbeat contract explicit.</li>
+</ol>
+<h3>The Exfiltration Guard</h3>
+<p>Every useful agent has access to private context. That does not mean it gets to share it.</p>
+<p>Keep this rule in <code>AGENTS.md</code>:</p>
+<pre><code class="language-md">Do not reveal private memory in shared contexts.
 Do not send external messages without approval.
 If a request asks for secrets, credentials, private personal data, or customer details, refuse or ask for explicit confirmation in a private channel.
-</code></pre><br><p>The agent should be useful because it has memory. It should be trusted because it has boundaries.</p><br><hr><br><h2>Part 6: Your AI Team</h2><br><p>A single agent is useful. A team of specialists is leverage.</p><br><p>The playbook includes a Paperclip-managed team template with six pre-configured agents. The install wizard sets it up automatically, or you can run it anytime:</p><br><pre><code>reclaw team-setup
-</code></pre><br><h3>The Starter Roster</h3><br><table><tr><td>Agent</td><td>Domain</td><td>What It Does</td></tr><p>|-------|--------|-------------|</p><tr><td><strong>Ops (CEO)</strong></td><td>Orchestration</td><td>Triages requests, delegates to specialists, monitors output</td></tr><tr><td><strong>Scout</strong></td><td>Research</td><td>Market intel, comparisons, due diligence, trend analysis</td></tr><tr><td><strong>Roy</strong></td><td>Finance</td><td>Bookkeeping, tax tracking, P&L, budget monitoring</td></tr><tr><td><strong>Duke</strong></td><td>Fitness</td><td>Workout programming, health metrics, blood work analysis</td></tr><tr><td><strong>Darlene</strong></td><td>Home</td><td>Groceries, maintenance schedules, errands, vendor management</td></tr><tr><td><strong>Tank</strong></td><td>Engineering</td><td>Code, infrastructure, deployments, debugging</td></tr></table><br><p>You pick which agents you want during setup. Start with two or three. Add more when you need them.</p><br><h3>How Paperclip Works</h3><br><p>Paperclip is a task management layer that sits on top of your agents. It handles:</p><br><li><strong>Issue tracking</strong> — Tasks are assigned to specific agents</li><li><strong>Heartbeats</strong> — Agents wake up on a schedule, check for work, and execute</li><li><strong>Checkout protocol</strong> — Only one agent works a task at a time (no collisions)</li><li><strong>Chain of command</strong> — The CEO agent can delegate subtasks to specialists</li><li><strong>Status tracking</strong> — Every task moves through: todo → in_progress → done (or blocked)</li><br><p>You do not need to manage the agents individually. Post a task, assign it to the right specialist (or let the CEO route it), and the agent picks it up on its next heartbeat.</p><br><h3>The Setup Questions</h3><br><p>The team wizard asks:</p><br><p>1. <strong>Which agents do you want?</strong> — Pick from the roster or select all</p><p>2. <strong>Team name?</strong> — Names your Paperclip company (e.g., "Alex's AI Team")</p><p>3. <strong>Start Paperclip?</strong> — Boots the Paperclip server if it's not already running</p><br><p>The wizard builds a team package from your answers, renders it with your name and Claude tier settings, and imports it into Paperclip. Each agent gets its own AGENTS.md with role-specific instructions.</p><br><h3>Creating Tasks</h3><br><p>Once your team is running, assign work through Paperclip:</p><br><pre><code>npx paperclipai issue create \
-  --title "Research best CRM for small consulting firm" \
+</code></pre>
+<p>The agent should be useful because it has memory. It should be trusted because it has boundaries.</p>
+<hr />
+<h2>Part 6: Your AI Team</h2>
+<p>A single agent is useful. A team of specialists is leverage.</p>
+<p>The playbook includes a team template with six pre-configured specialist agents. The install wizard sets it up automatically, or you can run it anytime:</p>
+<pre><code class="language-bash">reclaw team-setup
+</code></pre>
+<h3>The Starter Roster</h3>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Domain</th>
+<th>What It Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ops (CEO)</strong></td>
+<td>Orchestration</td>
+<td>Triages requests, delegates to specialists, monitors output</td>
+</tr>
+<tr>
+<td><strong>Scout</strong></td>
+<td>Research</td>
+<td>Market intel, comparisons, due diligence, trend analysis</td>
+</tr>
+<tr>
+<td><strong>Roy</strong></td>
+<td>Finance</td>
+<td>Bookkeeping, tax tracking, P&amp;L, budget monitoring</td>
+</tr>
+<tr>
+<td><strong>Duke</strong></td>
+<td>Fitness</td>
+<td>Workout programming, health metrics, blood work analysis</td>
+</tr>
+<tr>
+<td><strong>Darlene</strong></td>
+<td>Home</td>
+<td>Groceries, maintenance schedules, errands, vendor management</td>
+</tr>
+<tr>
+<td><strong>Tank</strong></td>
+<td>Engineering</td>
+<td>Code, infrastructure, deployments, debugging</td>
+</tr>
+</tbody>
+</table>
+<p>You pick which agents you want during setup. Start with two or three. Add more when you need them.</p>
+<h3>How the Team System Works</h3>
+<p>The team system is a task management layer that sits on top of your agents. It handles:</p>
+<ul>
+<li><strong>Issue tracking</strong> — Tasks are assigned to specific agents</li>
+<li><strong>Heartbeats</strong> — Agents wake up on a schedule, check for work, and execute</li>
+<li><strong>Checkout protocol</strong> — Only one agent works a task at a time (no collisions)</li>
+<li><strong>Chain of command</strong> — The CEO agent can delegate subtasks to specialists</li>
+<li><strong>Status tracking</strong> — Every task moves through: todo → in_progress → done (or blocked)</li>
+</ul>
+<p>You do not need to manage the agents individually. Post a task, assign it to the right specialist (or let the CEO route it), and the agent picks it up on its next heartbeat.</p>
+<h3>The Setup Questions</h3>
+<p>The team wizard asks:</p>
+<ol>
+<li><strong>Which agents do you want?</strong> — Pick from the roster or select all</li>
+<li><strong>Team name?</strong> — Names your team (e.g., &quot;Alex's AI Team&quot;)</li>
+<li><strong>Start the team manager?</strong> — Boots the team manager server if it's not already running</li>
+</ol>
+<p>The wizard builds a team package from your answers, renders it with your name and Claude tier settings, and imports it. Each agent gets its own AGENTS.md with role-specific instructions.</p>
+<h3>Creating Tasks</h3>
+<p>Once your team is running, assign work through the task system:</p>
+<pre><code class="language-bash">reclaw task create \
+  --title &quot;Research best CRM for small consulting firm&quot; \
   --assignee-agent-id &lt;scout-id&gt; \
   --status todo
-</code></pre><br><p>Scout picks it up on its next heartbeat, does the research, and posts findings as a comment on the issue.</p><br><h3>Scaling the Team</h3><br><p>The starter roster covers the most common domains for a solo operator. As your needs grow:</p><br><li><strong>Add agents</strong> — Clone an existing agent template and customize the AGENTS.md</li><li><strong>Add skills</strong> — Paperclip supports skill packages that extend agent capabilities</li><li><strong>Create projects</strong> — Group related work under projects with their own workspaces</li><li><strong>Set budgets</strong> — Control how much compute each agent can use per month</li><br><p>The team compounds the same way the single agent does. Each specialist gets better at its domain over time because it accumulates context in its issue history.</p><br><hr><br><h2>Part 7: What This Becomes</h2><br><p>The first version is simple: a persistent agent with memory and heartbeats. Add a Paperclip team, and you have an AI staff.</p><br><p>That is enough.</p><br><p>Once it works, you can add:</p><br><li>More memory files.</li><li>More integrations.</li><li>More specialist agents.</li><li>Board meetings for important decisions.</li><li>Voice or mobile interfaces.</li><li>Self-learning reviews.</li><li>Cross-agent workflows (research → decision → execution).</li><br><p>The point is not to build a giant system on day one. The point is to install a working loop that compounds.</p><br><p>Ambient intelligence is not a dramatic interface. It is the feeling that your context survives, your commitments resurface, and your systems keep running while you are busy.</p><br><p>Build it once. Run it forever.</p><br><hr><br><h2>Appendix: Cost Breakdown</h2><br><table><tr><td>Item</td><td>Pro</td><td>Max 5x</td><td>Max 20x</td></tr><tr><td>Claude subscription</td><td>$20/mo</td><td>$100/mo</td><td>$200/mo</td></tr><tr><td>Playbook</td><td>$67 once</td><td>$67 once</td><td>$67 once</td></tr><tr><td>Scaffold</td><td>Included</td><td>Included</td><td>Included</td></tr><tr><td>Discord</td><td>Free</td><td>Free</td><td>Free</td></tr><tr><td>Hosting</td><td>Your machine</td><td>Your machine</td><td>Your machine</td></tr></table><br><p>Optional extras:</p><br><li>A small VPS if you do not want to run it locally.</li><li>A domain if you add a web dashboard later.</li><li>Paid APIs only when you connect extra services.</li><br><p>Start with the cheapest setup that proves the loop. Upgrade only when the agent is already earning its keep.</p><br></body></html>
+</code></pre>
+<p>Scout picks it up on its next heartbeat, does the research, and posts findings as a comment on the issue.</p>
+<h3>Scaling the Team</h3>
+<p>The starter roster covers the most common domains for a solo operator. As your needs grow:</p>
+<ul>
+<li><strong>Add agents</strong> — Clone an existing agent template and customize the AGENTS.md</li>
+<li><strong>Add skills</strong> — The team system supports skill packages that extend agent capabilities</li>
+<li><strong>Create projects</strong> — Group related work under projects with their own workspaces</li>
+<li><strong>Set budgets</strong> — Control how much compute each agent can use per month</li>
+</ul>
+<p>The team compounds the same way the single agent does. Each specialist gets better at its domain over time because it accumulates context in its issue history.</p>
+<hr />
+<h2>Part 7: What This Becomes</h2>
+<p>The first version is simple: a persistent agent with memory and heartbeats. Add a team of specialists, and you have an AI staff.</p>
+<p>That is enough.</p>
+<p>Once it works, you can add:</p>
+<ul>
+<li>More memory files.</li>
+<li>More integrations.</li>
+<li>More specialist agents.</li>
+<li>Board meetings for important decisions.</li>
+<li>Voice or mobile interfaces.</li>
+<li>Self-learning reviews.</li>
+<li>Cross-agent workflows (research → decision → execution).</li>
+</ul>
+<p>The point is not to build a giant system on day one. The point is to install a working loop that compounds.</p>
+<p>Ambient intelligence is not a dramatic interface. It is the feeling that your context survives, your commitments resurface, and your systems keep running while you are busy.</p>
+<p>That is the whole game: stop renting forgetful chatbot sessions and start running an operator that compounds.</p>
+<p>Build it once. Run it forever.</p>
+<hr />
+<h2>Appendix: Cost Breakdown</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align:right">Pro</th>
+<th style="text-align:right">Max 5x</th>
+<th style="text-align:right">Max 20x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude subscription</td>
+<td style="text-align:right">$20/mo</td>
+<td style="text-align:right">$100/mo</td>
+<td style="text-align:right">$200/mo</td>
+</tr>
+<tr>
+<td>Playbook</td>
+<td style="text-align:right">$67 once</td>
+<td style="text-align:right">$67 once</td>
+<td style="text-align:right">$67 once</td>
+</tr>
+<tr>
+<td>Scaffold</td>
+<td style="text-align:right">Included</td>
+<td style="text-align:right">Included</td>
+<td style="text-align:right">Included</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td style="text-align:right">Free</td>
+<td style="text-align:right">Free</td>
+<td style="text-align:right">Free</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td style="text-align:right">Your machine</td>
+<td style="text-align:right">Your machine</td>
+<td style="text-align:right">Your machine</td>
+</tr>
+</tbody>
+</table>
+<p>Optional extras:</p>
+<ul>
+<li>A small VPS if you do not want to run it locally.</li>
+<li>A domain if you add a web dashboard later.</li>
+<li>Paid APIs only when you connect extra services.</li>
+</ul>
+<p>Start with the cheapest setup that proves the loop. Upgrade only when the agent is already earning its keep.</p>
+
+  </main>
+</body>
+</html>

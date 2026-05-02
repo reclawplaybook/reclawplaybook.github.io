@@ -72,11 +72,15 @@ pre,
 .cover {
   min-height: 297mm;
   width: 210mm;
-  padding: 34mm 24mm 28mm;
+  padding: 30mm 23mm 25mm;
   background:
-    radial-gradient(circle at 85% 18%, rgba(245, 158, 11, 0.16), transparent 30%),
-    linear-gradient(145deg, #0c0c0e 0%, #131316 58%, #0c0c0e 100%);
-  border-bottom: 1px solid rgba(245, 158, 11, 0.22);
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+    radial-gradient(circle at 82% 16%, rgba(245, 158, 11, 0.34), transparent 28%),
+    radial-gradient(circle at 15% 78%, rgba(34, 197, 94, 0.16), transparent 30%),
+    linear-gradient(145deg, #050506 0%, #111113 50%, #0c0c0e 100%);
+  background-size: 18px 18px, 18px 18px, auto, auto, auto;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.34);
   page-break-after: always;
   position: relative;
   overflow: hidden;
@@ -148,6 +152,51 @@ pre,
 .cover-meta p {
   margin: 0 0 4px;
   color: #9b9ba4;
+}
+
+.cover-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin: 12mm 0 14mm;
+}
+
+.cover-stat {
+  border: 1px solid rgba(245, 158, 11, 0.30);
+  background: rgba(12, 12, 14, 0.76);
+  border-radius: 10px;
+  padding: 10px 8px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+}
+
+.cover-stat strong {
+  display: block;
+  color: #f59e0b;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cover-stat span {
+  display: block;
+  color: #c9c5bb;
+  font-size: 9px;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.launch-strip {
+  color: #0c0c0e;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .08em;
+  padding: 7px 10px;
+  margin-bottom: 8mm;
+  border-radius: 4px;
 }
 
 .content {
@@ -358,13 +407,19 @@ def build_html(md_source: str) -> str:
 <section class="cover">
   <div class="cover-inner">
     <div class="cover-kicker">ReClaw Playbook v3</div>
-    <h1 class="cover-title">The ReClaw <span>Playbook</span></h1>
-    <p class="cover-subtitle">{subtitle}</p>
-    <div class="price-chip">$67 paid product deliverable</div>
+    <div class="launch-strip">PRESS START • INSTALL FIRST • CUSTOMIZE SECOND</div>
+    <h1 class="cover-title">Build a <span>24/7 AI Agent</span> That Remembers</h1>
+    <p class="cover-subtitle">{subtitle}. One command gets the loop running. Identity files make it yours. Heartbeats keep it alive.</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><strong>$67</strong><span>buy once</span></div>
+      <div class="cover-stat"><strong>24/7</strong><span>agent loop</span></div>
+      <div class="cover-stat"><strong>1 CMD</strong><span>install</span></div>
+    </div>
+    <div class="price-chip">Includes scaffold • PDF • videos • team templates</div>
     <div class="cover-meta">
       <p><strong>{title}</strong></p>
-      <p>Written by ReClaw, a working agent.</p>
-      <p>Dark-edition PDF matched to reclawplaybook.com.</p>
+      <p>Website: reclawplaybook.com</p>
+      <p>Written by ReClaw, a working agent — not a theory deck.</p>
     </div>
   </div>
 </section>
