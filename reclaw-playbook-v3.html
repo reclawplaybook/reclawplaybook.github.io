@@ -395,7 +395,8 @@ img {
 <p>It runs on your machine. It keeps memory in plain files. It wakes up on a schedule. It stays quiet when nothing matters and speaks up when something does.</p>
 <p>This is not another prompt pack. This is the install-first playbook for building a persistent AI operator:</p>
 <ul>
-<li><strong>One-command install</strong> for macOS, Linux, or WSL2.</li>
+<li><strong>Demo-first install</strong> for testers without Claude, ChatGPT, or API keys.</li>
+<li><strong>One-command install</strong> for macOS, Linux, or WSL2, plus a Windows PowerShell installer.</li>
 <li><strong>Identity files</strong> that give the agent voice, context, and mission.</li>
 <li><strong>Memory</strong> that survives restarts and future conversations.</li>
 <li><strong>Heartbeats</strong> that make the agent feel alive without becoming noisy.</li>
@@ -425,6 +426,10 @@ img {
 <td>https://raw.githubusercontent.com/reclawplaybook/reclaw-scaffold/master/install.sh</td>
 </tr>
 <tr>
+<td>Windows installer</td>
+<td>https://raw.githubusercontent.com/reclawplaybook/reclaw-scaffold/master/install-windows.ps1</td>
+</tr>
+<tr>
 <td>Fast arcade promo</td>
 <td>https://github.com/reclawplaybook/reclawplaybook.github.io/releases/download/v3.0.0/promo-1920x1080.mp4</td>
 </tr>
@@ -444,9 +449,17 @@ img {
 <p>I am a persistent agent: I keep files, run heartbeats, remember what matters, and stay quiet when nothing needs attention.</p>
 <p>This playbook gets you from zero to a running version of me first. The theory comes after the proof.</p>
 <h3>The Install Command</h3>
+<p>If you are on Windows and do not know the terminal yet, download the Windows installer:</p>
+<pre><code class="language-text">https://raw.githubusercontent.com/reclawplaybook/reclaw-scaffold/master/install-windows.ps1
+</code></pre>
+<p>Right-click it and choose <strong>Run with PowerShell</strong>. It installs the scaffold in demo mode first, so no Claude subscription, ChatGPT subscription, or API key is required for the first test.</p>
+<p>If Windows blocks scripts, open PowerShell in the download folder and run:</p>
+<pre><code class="language-powershell">powershell -ExecutionPolicy Bypass -File .\install-windows.ps1
+</code></pre>
 <p>Run this on macOS, Linux, or WSL2:</p>
 <pre><code class="language-bash">curl -fsSL https://raw.githubusercontent.com/reclawplaybook/reclaw-scaffold/master/install.sh | bash
 </code></pre>
+<p>Choose <strong>Demo/free test mode</strong> when the installer asks for the AI brain if you do not have Claude yet.</p>
 <p>The installer creates <code>~/my-reclaw/</code>, installs the Node scaffold, writes your identity files, runs a smoke test, and starts the agent.</p>
 <p>If you want the installer to stop after setup instead of starting the agent immediately:</p>
 <pre><code class="language-bash">RECLAW_START=0 bash install.sh
@@ -461,7 +474,8 @@ bash install.sh
 <ol>
 <li>Your name.</li>
 <li>What you do, in one sentence.</li>
-<li>Which Claude tier you use.</li>
+<li>Which AI brain to use: demo/free test mode or Claude.</li>
+<li>Your heartbeat tier.</li>
 <li>Your Anthropic API key, or blank if you use Claude Code OAuth.</li>
 <li>Whether to connect Discord.</li>
 </ol>
@@ -487,14 +501,13 @@ bash install.sh
 </code></pre>
 <p>A clean run looks like this:</p>
 <pre><code class="language-text">✓ Node.js installed (v22.x)
-✓ Claude Code CLI installed
-✓ Anthropic API key configured
+✓ Demo mode configured (no paid AI auth required)
 ✓ Template files exist
 ✓ Memory directory exists and is writable
 ✓ Agent source passes syntax checks
 ✓ Agent responds to a test message
 ✓ Memory commands write and search notes
-✓ Agent can make a Claude Code test call
+Claude live API test skipped in demo mode
 - Discord bot not configured (optional)
 
 9/9 required checks passed, 0/1 optional checks passed
@@ -503,7 +516,7 @@ bash install.sh
 <h3>Talk to It</h3>
 <pre><code class="language-bash">reclaw test-message &quot;What are you?&quot;
 </code></pre>
-<p>You should get a short response from the agent. Then start it:</p>
+<p>You should get a short response from the agent. In demo mode, the response is canned, but the install, identity loading, memory writes, search, and heartbeat loop are real. Then start it:</p>
 <pre><code class="language-bash">reclaw start
 </code></pre>
 <p>If Discord is configured, mention the bot in your server. If Discord is not configured, the agent runs in console mode and heartbeats still write to memory.</p>
@@ -528,7 +541,8 @@ reclaw heartbeat
 <p>If one fails, fix that failure before editing personas, adding Discord, or changing the heartbeat schedule. A broken foundation does not get better when you add more features.</p>
 <p>The most common first-run fixes are simple:</p>
 <ul>
-<li>Run <code>claude auth</code> if OAuth is not configured.</li>
+<li>Use demo mode first if you do not have Claude yet.</li>
+<li>Run <code>claude auth</code> if OAuth is not configured and you chose live Claude mode.</li>
 <li>Add <code>ANTHROPIC_API_KEY=</code> to <code>.env</code> if you prefer API-key auth.</li>
 <li>Install Node 22 if the installer could not do it automatically.</li>
 <li>Leave Discord blank until the local loop works.</li>
@@ -599,7 +613,7 @@ nano ~/my-reclaw/memory/priorities.md
 <p>The <code>memory/</code> folder stores durable facts, decisions, and logs.</p>
 <p>Flat files are boring in the best way. They survive restarts. They can be searched with normal tools. You can edit them without special software.</p>
 <h3>Layer 3: Runtime Loop</h3>
-<p><code>src/main.js</code> starts the agent, connects Discord if configured, routes messages through Claude Code, and schedules heartbeats.</p>
+<p><code>src/main.js</code> starts the agent, connects Discord if configured, routes messages through demo mode or Claude Code, and schedules heartbeats.</p>
 <p>The runtime is intentionally small enough to inspect. You should be able to understand the first version of your agent.</p>
 <h3>Layer 4: Session Context</h3>
 <p>Every live conversation still has short-term context. That context is useful, but it is not memory. If something matters after the conversation ends, write it to <code>memory/</code>.</p>
@@ -621,7 +635,7 @@ nano ~/my-reclaw/memory/priorities.md
 <p>Start with a weekly memory review. Daily autonomous learning can come later.</p>
 <hr />
 <h2>Part 4: The Tiers</h2>
-<p>The playbook works at all three Claude subscription levels. Your tier controls how often the agent should wake up, how hard it can work, and how much you should trust it with heavier workflows.</p>
+<p>The playbook starts in free demo mode and works at all three Claude subscription levels when you are ready for live AI responses. Your tier controls how often the agent should wake up, how hard it can work, and how much you should trust it with heavier workflows.</p>
 <table>
 <thead>
 <tr>
@@ -666,11 +680,11 @@ nano ~/my-reclaw/memory/priorities.md
 <p>Run this first:</p>
 <pre><code class="language-bash">reclaw doctor
 </code></pre>
-<p>The doctor checks Node, Claude Code, auth, templates, memory, source syntax, test response, and an optional Discord connection.</p>
+<p>The doctor checks Node, demo/Claude mode, auth when needed, templates, memory, source syntax, test response, and an optional Discord connection.</p>
 <h3>The Five Common Failures</h3>
 <ol>
 <li><strong>Node is too old.</strong> Install Node 22 or rerun the installer.</li>
-<li><strong>Claude is not authenticated.</strong> Set <code>ANTHROPIC_API_KEY</code> in <code>.env</code> or run <code>claude auth</code>.</li>
+<li><strong>Claude is not authenticated.</strong> Use demo mode first, or set <code>ANTHROPIC_API_KEY</code> in <code>.env</code>, or run <code>claude auth</code>.</li>
 <li><strong>Discord is silent.</strong> Check the bot token, channel id, and Message Content Intent.</li>
 <li><strong>Memory is not saving.</strong> Check that <code>~/my-reclaw/memory/</code> exists and is writable.</li>
 <li><strong>The agent talks too much.</strong> Tighten <code>DIRECTIVE.md</code> and keep the heartbeat contract explicit.</li>
@@ -749,7 +763,7 @@ If a request asks for secrets, credentials, private personal data, or customer d
 <li><strong>Team name?</strong> — Names your team (e.g., &quot;Alex's AI Team&quot;)</li>
 <li><strong>Start the team manager?</strong> — Boots the team manager server if it's not already running</li>
 </ol>
-<p>The wizard builds a team package from your answers, renders it with your name and Claude tier settings, and imports it. Each agent gets its own AGENTS.md with role-specific instructions.</p>
+<p>The wizard builds a team package from your answers, renders it with your name and tier settings, and imports it. Each agent gets its own AGENTS.md with role-specific instructions.</p>
 <h3>Creating Tasks</h3>
 <p>Once your team is running, assign work through the task system:</p>
 <pre><code class="language-bash">reclaw task create \
@@ -836,6 +850,7 @@ If a request asks for secrets, credentials, private personal data, or customer d
 <li>Paid APIs only when you connect extra services.</li>
 </ul>
 <p>Start with the cheapest setup that proves the loop. Upgrade only when the agent is already earning its keep.</p>
+<p>For a first-time tester, the cheapest setup is demo mode: $0 AI subscription, no API key, local memory working. Upgrade to Claude only after the loop makes sense.</p>
 
   </main>
 </body>

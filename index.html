@@ -897,7 +897,7 @@
     Agent running 24/7
   </div>
   <h1>Build an AI <span class="accent gradient-text">team</span> that never forgets.</h1>
-  <p class="hero-sub">One command to scaffold. Three text files to customize. Deploy a full team of specialist agents that run on your machine, remember across sessions, and operate while you sleep.</p>
+  <p class="hero-sub">Start in free demo mode. No Claude, ChatGPT, or API key required to test the local loop. Then connect Claude when you want live AI responses.</p>
   <div class="hero-actions">
     <div class="btn-primary-wrap">
       <a href="#pricing" class="btn-primary">Get the Playbook &mdash; $67 <span class="arrow">&rarr;</span></a>
@@ -919,7 +919,7 @@
       </div>
     </div>
   </div>
-  <p class="hero-price" style="margin-top:24px">One-time purchase. <strong>No subscription.</strong> Plus your Claude plan.</p>
+  <p class="hero-price" style="margin-top:24px">One-time purchase. <strong>Free demo mode included.</strong> Claude is optional until you want live AI.</p>
 </section>
 
 <div class="section-divider"></div>
@@ -959,13 +959,12 @@
     </div>
     <div class="bento-card span-2 reveal stagger-item">
       <div class="bento-icon">⚡</div>
-      <h3>Claude Code Under the Hood</h3>
-      <p>Every complex task delegates to a full Claude Code CLI session. File reads, shell commands, git ops, web fetches &mdash; all autonomous. Your agent can do anything you can do in a terminal.</p>
+      <h3>Demo First, Claude Later</h3>
+      <p>Demo mode proves the agent loop without paid AI: install, memory, search, heartbeats, doctor checks, and canned replies. Connect Claude Code later for real reasoning.</p>
       <div class="mono-preview">
         <span class="t-prompt">$</span> reclaw doctor<br>
         <span class="t-green">&#10003;</span> Node.js installed &nbsp;
-        <span class="t-green">&#10003;</span> Claude Code CLI &nbsp;
-        <span class="t-green">&#10003;</span> Auth configured &nbsp;
+        <span class="t-green">&#10003;</span> Demo mode configured &nbsp;
         <span class="t-green">&#10003;</span> Memory writable<br>
         <span class="t-green">&#10003;</span> Agent responds &nbsp;
         <span class="t-green">&#10003;</span> Memory persists &nbsp;
@@ -1051,14 +1050,14 @@
   <div class="reveal">
     <div class="section-label">How it works</div>
     <h2 class="section-title gradient-text">Three steps to a running agent.</h2>
-    <p class="section-desc">No Docker. No Kubernetes. No infrastructure degree. One command on any machine with Node.js.</p>
+    <p class="section-desc">No Docker. No Kubernetes. No paid AI account required for the first test. Start with demo mode, then upgrade the brain later.</p>
   </div>
 
   <div class="steps">
     <div class="step reveal stagger-item">
       <div class="step-num">01</div>
       <h3>Install the scaffold</h3>
-      <p>Run <code>curl ... | bash</code> and the setup wizard asks 5 questions: your name, what you do, your Claude tier, API key or OAuth, and Discord.</p>
+      <p>Windows users can run the PowerShell installer. macOS, Linux, and WSL2 users can run <code>curl ... | bash</code>. Pick demo mode if you do not have Claude yet.</p>
     </div>
     <div class="step reveal stagger-item">
       <div class="step-num">02</div>
@@ -1068,7 +1067,7 @@
     <div class="step reveal stagger-item">
       <div class="step-num">03</div>
       <h3>Deploy your team</h3>
-      <p>Run <code>reclaw team-setup</code> to spin up specialist agents. Start the system as a service. Your AI team runs heartbeats, handles tasks, and operates 24/7.</p>
+      <p>Run <code>reclaw team-setup</code> to spin up specialist agents. Start the system as a service. Your AI team runs heartbeats, handles tasks, and operates 24/7 once a live AI brain is connected.</p>
     </div>
   </div>
 </section>
@@ -1160,11 +1159,11 @@
 <section class="pricing reveal" id="pricing">
   <div class="section-label">One price. Everything included.</div>
   <div class="price-tag" id="priceTag">$67</div>
-  <p class="price-sub">One-time. No subscription. Scaffold + playbook + videos + lifetime updates.</p>
+  <p class="price-sub">One-time. Free demo mode. Scaffold + playbook + videos + lifetime updates.</p>
   <div class="btn-primary-wrap">
     <a href="https://buy.stripe.com/4gw5mKfKH9aS1tm5kk" class="btn-primary">Get the Playbook Now <span class="arrow">&rarr;</span></a>
   </div>
-  <p class="price-note">Plus your Claude subscription ($20-200/mo depending on tier). Instant delivery via email.</p>
+  <p class="price-note">Claude subscription or API key is optional for the first demo install, and required for real AI responses. Instant delivery via email.</p>
 </section>
 
 <div class="section-divider"></div>
@@ -1188,7 +1187,7 @@
     <li>No refunds after delivery (instant digital delivery).</li>
     <li>Personal use license &mdash; one seat per purchase.</li>
     <li>Lifetime updates included at no extra cost.</li>
-    <li>Requires a Claude subscription (Pro, Max, or API) sold separately by Anthropic.</li>
+    <li>Demo mode runs without a paid AI subscription. Live AI responses require Claude Code OAuth or an Anthropic API key sold separately by Anthropic.</li>
   </ul>
 </section>
 
@@ -1219,8 +1218,8 @@ document.querySelectorAll('.bento, .steps, .includes-grid').forEach(grid => {
 
 // ─── HERO TERMINAL ANIMATION ───
 const termLines = [
-  { text: '<span class="t-prompt">$</span> curl -fsSL https://...install.sh | bash', delay: 400 },
-  { text: '<span class="t-dim">Detecting OS... Linux (WSL2)</span>', delay: 1200 },
+  { text: '<span class="t-prompt">$</span> install-windows.ps1  <span class="t-dim">or</span>  curl -fsSL ... | bash', delay: 400 },
+  { text: '<span class="t-dim">AI brain selected: demo/free test mode</span>', delay: 1200 },
   { text: '<span class="t-dim">Installing scaffold...</span>', delay: 1800 },
   { text: '<span class="t-dim">Writing identity files...</span>', delay: 2400 },
   { text: '<span class="t-green">Agent installed.</span>', delay: 3200 },
@@ -1229,7 +1228,7 @@ const termLines = [
   { text: '<span class="t-green">&#10003;</span> <span class="t-dim">All 9 checks passed</span>', delay: 4800 },
   { text: '', delay: 5000 },
   { text: '<span class="t-prompt">$</span> reclaw start', delay: 5400 },
-  { text: '<span class="t-accent">Agent running. Heartbeat active.</span> <span class="t-cursor"></span>', delay: 6200 },
+  { text: '<span class="t-accent">Memory + heartbeat active.</span> <span class="t-cursor"></span>', delay: 6200 },
 ];
 
 const termEl = document.getElementById('hero-terminal');
