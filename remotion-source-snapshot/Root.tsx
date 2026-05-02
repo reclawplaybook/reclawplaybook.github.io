@@ -19,7 +19,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="PromoVideo"
         component={PromoVideo}
-        durationInFrames={98 * FPS}
+        durationInFrames={58 * FPS}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
@@ -27,7 +27,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="PromoVertical"
         component={PromoVideo}
-        durationInFrames={98 * FPS}
+        durationInFrames={58 * FPS}
         fps={FPS}
         width={1080}
         height={1920}
