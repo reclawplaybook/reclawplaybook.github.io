@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_URL="${RECLAW_REPO_URL:-https://github.com/sch9826/reclaw-scaffold.git}"
+REPO_URL="${RECLAW_REPO_URL:-https://github.com/reclawplaybook/reclaw-scaffold.git}"
 INSTALL_DIR="${RECLAW_INSTALL_DIR:-$HOME/my-reclaw}"
 NONINTERACTIVE="${RECLAW_NONINTERACTIVE:-0}"
 START_AGENT="${RECLAW_START:-1}"
