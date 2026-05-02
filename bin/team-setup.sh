@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# ReClaw Playbook — Paperclip Team Setup
+# ReClaw Playbook — AI Team Setup
 # Called from install.sh or standalone via `reclaw team-setup`
 
 ROOT="${RECLAW_HOME:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
@@ -28,9 +28,9 @@ check_paperclip() {
   if need_cmd npx && npx paperclipai --version >/dev/null 2>&1; then
     return 0
   fi
-  echo "Paperclip CLI not found. Installing..."
+  echo "Team manager CLI not found. Installing..."
   npm install -g paperclipai 2>/dev/null || npm install -g @anthropic-ai/paperclipai 2>/dev/null || {
-    echo "Could not install Paperclip CLI. Install it manually:"
+    echo "Could not install team manager CLI. Install it manually:"
     echo "  npm install -g paperclipai"
     echo ""
     echo "Then re-run: reclaw team-setup"
@@ -45,32 +45,32 @@ check_paperclip_running() {
   fi
 
   echo ""
-  echo "Paperclip server not detected at $url"
+  echo "Team manager server not detected at $url"
   echo ""
-  echo "To start Paperclip:"
+  echo "To start it:"
   echo "  npx paperclipai run"
   echo ""
   echo "Or if you haven't set it up yet:"
   echo "  npx paperclipai onboard --run"
   echo ""
 
-  start_it="${RECLAW_START_PAPERCLIP:-$(ask "Start Paperclip now? [y/n] " "y")}"
+  start_it="${RECLAW_START_PAPERCLIP:-$(ask "Start team manager now? [y/n] " "y")}"
   if [ "$start_it" = "y" ] || [ "$start_it" = "Y" ]; then
-    echo "Starting Paperclip in background..."
+    echo "Starting team manager in background..."
     npx paperclipai onboard -y --run &
     PAPERCLIP_PID=$!
-    echo "Waiting for Paperclip to start..."
+    echo "Waiting for team manager to start..."
     for i in $(seq 1 30); do
       if curl -s --max-time 2 "$url/api" >/dev/null 2>&1; then
-        echo "Paperclip is running (PID $PAPERCLIP_PID)"
+        echo "Team manager is running (PID $PAPERCLIP_PID)"
         return 0
       fi
       sleep 1
     done
-    echo "Paperclip didn't start in 30s. Run 'npx paperclipai onboard --run' manually."
+    echo "Team manager didn't start in 30s. Run 'npx paperclipai onboard --run' manually."
     exit 1
   else
-    echo "Skipping team setup. Run 'reclaw team-setup' after starting Paperclip."
+    echo "Skipping team setup. Run 'reclaw team-setup' after starting the team manager."
     exit 0
   fi
 }
@@ -165,7 +165,7 @@ build_package() {
 
 import_team() {
   echo ""
-  echo "Importing team into Paperclip..."
+  echo "Importing team..."
 
   local api_url="${PAPERCLIP_API_URL:-http://127.0.0.1:3101}"
 
@@ -182,9 +182,9 @@ import_team() {
     echo ""
     echo "Team imported successfully!"
     echo ""
-    echo "Your agents are now in Paperclip. To connect them:"
+    echo "Your agents are ready. To connect them:"
     echo ""
-    echo "  1. Open Paperclip UI: ${PAPERCLIP_UI_URL:-http://localhost:3100}"
+    echo "  1. Open the team dashboard: ${PAPERCLIP_UI_URL:-http://localhost:3100}"
     echo "  2. Find your team: '$TEAM_NAME'"
     echo "  3. Each agent needs a local CLI adapter — run:"
     echo "     npx paperclipai agent local-cli <agent-name> --company-id <id>"
@@ -208,7 +208,7 @@ main() {
   echo "  ReClaw Playbook — Team Setup"
   echo "═══════════════════════════════════════════"
   echo ""
-  echo "This sets up a Paperclip-managed AI team"
+  echo "This sets up your AI team"
   echo "with specialist agents for your key domains."
   echo ""
 

@@ -172,8 +172,8 @@ main() {
   echo "ReClaw installed at $INSTALL_DIR"
   echo
 
-  # ── Paperclip Team Setup ──
-  setup_team="${RECLAW_SETUP_TEAM:-$(ask "Set up an AI team with Paperclip? (specialist agents for research, finance, fitness, home, engineering) [y/n] " "y")}"
+  # ── AI Team Setup ──
+  setup_team="${RECLAW_SETUP_TEAM:-$(ask "Set up an AI team? (specialist agents for research, finance, fitness, home, engineering) [y/n] " "y")}"
   if [ "$setup_team" = "y" ] || [ "$setup_team" = "Y" ]; then
     chmod +x "$INSTALL_DIR/bin/team-setup.sh"
     USER_NAME="$USER_NAME" AGENT_NAME="$AGENT_NAME" CLAUDE_TIER="$CLAUDE_TIER" \

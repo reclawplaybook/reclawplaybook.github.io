@@ -180,20 +180,20 @@ check_paperclip() {
   if command -v npx >/dev/null 2>&1 && npx paperclipai --version >/dev/null 2>&1; then
     local version
     version="$(npx paperclipai --version 2>/dev/null | head -1)"
-    pass "Paperclip CLI installed ($version)"
+    pass "Team manager CLI installed ($version)"
     return 0
   fi
-  skip "Paperclip CLI not installed (optional — needed for team setup)"
+  skip "Team manager CLI not installed (optional — needed for team setup)"
   return 1
 }
 
 check_paperclip_running() {
   local url="${PAPERCLIP_API_URL:-http://127.0.0.1:3101}"
   if curl -s --max-time 3 "$url/api" >/dev/null 2>&1; then
-    pass "Paperclip server running at $url"
+    pass "Team manager running at $url"
     return 0
   fi
-  skip "Paperclip server not running (optional — start with: npx paperclipai run)"
+  skip "Team manager not running (optional — start with: npx paperclipai run)"
   return 1
 }
 
